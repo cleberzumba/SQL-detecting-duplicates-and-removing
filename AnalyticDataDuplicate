@@ -1,0 +1,47 @@
+Detectando duplicidade.
+
+OPÇÃO 1
+-- Esse código informará se há algum caso de duplicidade. Se a consulta retormar 0 é porque não há problemas:
+
+SELECT count(*)
+FROM
+(
+	SELECT column_1, column_2, column_3, count(*) as records
+	FROM table_name
+	GROUP BY 1,2,3
+) a
+WHERE records > 1;
+
+
+OPÇÃO 2
+-- Para ver detalhes completos de que registros tem duplicidades:
+
+SELECT *
+FROM
+(
+	SELECT column_1, column_2, column_3, count(*) as records
+	FROM table_name
+	GROUP BY 1,2,3
+) a
+WHERE records = 1;
+
+
+
+OPÇÃO 3
+--Verificando os registros duplicados:
+
+Select DT_KEY_NR, count(*)
+From FACT_DALY  
+where ATC_DT = to_date('05-JUN-2022','DD-MON-YYYY')
+Having Count(*) > 1
+Group by DT_KEY_NR
+
+
+--Removendo os registros duplicados:
+
+Delete 
+From FACT_DALY t1
+Where rowid < (Select max(rowid) From FACT_DALY  t2 where ATC_DT = to_date('05-JUN-2022','DD-MON-YYYY') and t1.DT_KEY_NR = t2.DT_KEY_NR)
+--and ATC_DT = to_date('05-JUN-2014','DD-MON-YYYY');
+
+commit;
