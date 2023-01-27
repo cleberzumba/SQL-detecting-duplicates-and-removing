@@ -1,4 +1,7 @@
-Detectando duplicidade.
+Detectando duplicidade
+----------------------
+
+
 
 OPÇÃO 1
 -- Esse código informará se há algum caso de duplicidade. Se a consulta retormar 0 é porque não há problemas:
